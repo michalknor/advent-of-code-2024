@@ -14,6 +14,6 @@ class Day01(input: List<String>) {
 
 
 fun main() {
-    println(Day01(ParseFile.parseFileToList(Thread.currentThread().stackTrace[1].toString().split(".").first() + "/input.txt")).solvePart1())
-    println(Day01(ParseFile.parseFileToList(Thread.currentThread().stackTrace[1].toString().split(".").first() + "/input.txt")).solvePart2())
+    println(Day01(ParseFile.parseFileToList("day01/input.txt")).solvePart1())
+    println(Day01(ParseFile.parseFileToList("day01/input.txt")).solvePart2())
 }

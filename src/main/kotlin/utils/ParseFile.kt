@@ -15,10 +15,10 @@ import java.io.InputStreamReader
 
 internal object ParseFile {
     fun parseFileToList(filePath: String): List<String> {
+        return this::class.java.classLoader.getResource(filePath).readText().lines().toList()
+    }
 
-            // Get the file as a resource
-            val a = this::class.java.classLoader.getResource(filePath).readText().lines().toList()
-            val list: List<String> = a.toList()
-            return list
+    fun parseFileToListOfListOfInt(filePath: String): List<List<Int>> {
+        return this::class.java.classLoader.getResource(filePath).readText().lines().map{ line -> line.split(" ").mapNotNull { it.toIntOrNull() } }
     }
 }
