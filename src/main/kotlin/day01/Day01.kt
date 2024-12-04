@@ -15,7 +15,7 @@ class Day01(input: List<String>) {
 
   fun solvePart1(): Int = rightList.zip(leftList) { a, b -> Math.abs(a - b) }.sum()
 
-  fun solvePart2(): Int = rightList.map { a -> a * leftList.count { it == a } }.sum()
+  fun solvePart2(): Int = rightList.sumOf { a -> a * leftList.count { it == a } }
 }
 
 fun main() {

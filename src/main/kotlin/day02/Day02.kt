@@ -27,8 +27,7 @@ class Day02(private val input: List<List<Int>>) {
   }
 
   private fun isSafeWithRemoval(levels: List<Int>): Boolean {
-    val isSafe = isSafe(levels)
-    return when (isSafe) {
+    return when (val isSafe = isSafe(levels)) {
       0 -> true
       else ->
           isSafe(levels.filterIndexed { index, _ -> index != isSafe - 1 }) == 0 ||

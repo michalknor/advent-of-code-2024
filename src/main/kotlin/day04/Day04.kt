@@ -16,7 +16,7 @@ class Day04(private val input: List<List<Char>>) {
   }
 
   private fun xmasSearchCount(x: Int, y: Int): Int =
-      Direction.getAllDirections().map { direction -> xmasSearchCount(x, y, 1, direction) }.sum()
+      Direction.getAllDirections().sumOf { direction -> xmasSearchCount(x, y, 1, direction) }
 
   private fun xmasSearchCount(
       x: Int,
