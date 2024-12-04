@@ -15,7 +15,7 @@ import java.io.InputStreamReader
 
 internal object ParseFile {
     fun parseFileToString(filePath: String): String {
-        return this::class.java.classLoader.getResource(filePath).readText()
+        return this::class.java.classLoader.getResource(filePath).readText().lines().toString()
     }
     fun parseFileToList(filePath: String): List<String> {
         return this::class.java.classLoader.getResource(filePath).readText().lines().toList()
