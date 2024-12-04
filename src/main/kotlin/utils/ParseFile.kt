@@ -1,27 +1,18 @@
 package utils
 
-import java.io.BufferedReader
-import java.io.File
-import java.io.InputStreamReader
-
-//fun parseFileToList(filePath: String): List<String> {
-//    return try {
-//        File(filePath).readLines()
-//    } catch (e: Exception) {
-//        println("Error reading file: ${e.message}")
-//        emptyList()
-//    }
-//}
-
 internal object ParseFile {
-    fun parseFileToString(filePath: String): String {
-        return this::class.java.classLoader.getResource(filePath).readText().lines().toString()
-    }
-    fun parseFileToList(filePath: String): List<String> {
-        return this::class.java.classLoader.getResource(filePath).readText().lines().toList()
-    }
+  fun parseFileToString(filePath: String): String =
+      this::class.java.classLoader.getResource(filePath)?.readText()?.lines().toString()
 
-    fun parseFileToListOfListOfInt(filePath: String): List<List<Int>> {
-        return this::class.java.classLoader.getResource(filePath).readText().lines().map{ line -> line.split(" ").mapNotNull { it.toIntOrNull() } }
-    }
+  fun parseFileToList(filePath: String): List<String> =
+      this::class.java.classLoader.getResource(filePath)?.readText()?.lines() ?: emptyList()
+
+  fun parseFileToListOfListOfInt(filePath: String): List<List<Int>> =
+      this::class.java.classLoader.getResource(filePath)?.readText()?.lines()?.map { line ->
+        line.split(" ").mapNotNull { it.toIntOrNull() }
+      } ?: emptyList()
+
+  fun parseFileToListOfListOfChars(filePath: String): List<List<Char>> =
+      this::class.java.classLoader.getResource(filePath)?.readText()?.lines()?.map { it.toList() }
+          ?: emptyList()
 }

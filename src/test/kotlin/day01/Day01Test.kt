@@ -5,17 +5,17 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class Day01Test {
-    @Test
-    fun part1() {
-        val answer = Day01(ParseFile.parseFileToList("day01/test.txt")).solvePart1()
+  @Test
+  fun part1() {
+    val answer = Day01(ParseFile.parseFileToList("day01/test.txt")).solvePart1()
 
-        assertEquals(answer, 11)
-    }
+    assertEquals(11, answer)
+  }
 
-    @Test
-    fun part2() {
-        val answer = Day01(ParseFile.parseFileToList("day01/test.txt")).solvePart2()
+  @Test
+  fun part2() {
+    val answer = Day01(ParseFile.parseFileToList("day01/test.txt")).solvePart2()
 
-        assertEquals(answer, 31)
-    }
+    assertEquals(31, answer)
+  }
 }
