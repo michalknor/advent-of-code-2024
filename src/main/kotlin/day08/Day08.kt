@@ -36,7 +36,42 @@ class Day08(private val input: List<List<Char>>) {
     return antinodes.size
   }
 
-  fun solvePart2(): Int = 1
+  fun solvePart2(): Int {
+    val antinodes = HashSet<Pair<Int, Int>>()
+
+    for (charPositions in charsPositions) {
+      for (i in 0 until charPositions.value.size) {
+        val first = charPositions.value[i]
+        for (j in i + 1 until charPositions.value.size) {
+          val second = charPositions.value[j]
+          val vector = Pair(second.first - first.first, second.second - first.second)
+          antinodes.add(second)
+          antinodes.add(first)
+
+          var i = 1
+          while (true) {
+            val antinode1 = Pair(second.first + vector.first * i, second.second + vector.second * i)
+            if (antinode1.first !in input[0].indices || antinode1.second !in input.indices) {
+              break
+            }
+            antinodes.add(antinode1)
+            i++
+          }
+          i = 1
+          while (true) {
+            val antinode2 = Pair(first.first - vector.first * i, first.second - vector.second * i)
+            if (antinode2.first !in input[0].indices || antinode2.second !in input.indices) {
+              break
+            }
+            antinodes.add(antinode2)
+            i++
+          }
+        }
+      }
+    }
+
+    return antinodes.size
+  }
 }
 
 fun main() {

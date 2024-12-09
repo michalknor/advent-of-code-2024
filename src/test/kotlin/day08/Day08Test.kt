@@ -12,6 +12,6 @@ class Day08Test {
 
   @Test
   fun part2() {
-    assertEquals(14, Day08(ParseFile.parseFileToListOfListOfChars("day08/test.txt")).solvePart2())
+    assertEquals(34, Day08(ParseFile.parseFileToListOfListOfChars("day08/test.txt")).solvePart2())
   }
 }
