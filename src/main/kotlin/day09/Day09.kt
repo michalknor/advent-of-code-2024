@@ -28,11 +28,17 @@ class Day09(private val input: List<Int>) {
       disk[disk.indexOf(-1)] = disk.removeAt(disk.size - 1)
     }
 
-    return calculateCheckSum(disk)
+    var result = 0L
+    for ((i, it) in disk.withIndex()) {
+      if (it != -1L) {
+        result += i.toLong() * it
+      }
+    }
+    return result
   }
 
   fun solvePart2(): Long {
-    val emptySpaces = mutableListOf<Triple<Int, Int, Long>>()
+    val emptySpaces = mutableListOf<Pair<Int, Int>>()
     val filledSpaces = mutableListOf<Triple<Int, Int, Long>>()
     var discLocation = 0
 
@@ -47,31 +53,38 @@ class Day09(private val input: List<Int>) {
         break
       }
       val empty = input[i + 1]
+      if (empty == 0) {
+        continue
+      }
       discLocation += empty
-      emptySpaces.add(Triple(discLocation - empty, empty, id.toLong()))
+      emptySpaces.add(Pair(discLocation - empty, empty))
     }
 
-    println(filledSpaces)
-    println(emptySpaces)
-
-    for (filledSpace in filledSpaces.reversed()) {
-      for ((i, it) in emptySpaces.withIndex()) {
-        if (it.second >= filledSpace.second) {
-          break;
+    for (i in filledSpaces.indices.reversed()) {
+      val filledSpace = filledSpaces[i]
+      for ((j, emptySpace) in emptySpaces.withIndex()) {
+        if (emptySpace.first > filledSpaces[i].first) {
+          break
+        }
+        if (emptySpace.second >= filledSpace.second) {
+          emptySpaces[j] =
+              Pair(emptySpace.first + filledSpace.second, emptySpace.second - filledSpace.second)
+          filledSpaces[i] = Triple(emptySpace.first, filledSpace.second, filledSpace.third)
+          if (emptySpaces[j].second == 0) {
+            emptySpaces.removeAt(j)
+          }
+          break
         }
       }
     }
 
-    return 1
-  }
-
-  private fun calculateCheckSum(disk: MutableList<Long>): Long {
     var result = 0L
-    for ((i, it) in disk.withIndex()) {
-      if (it != -1L) {
-        result += i.toLong() * it
+    for (it in filledSpaces) {
+      for (i in it.first until it.first + it.second) {
+        result += it.third * i
       }
     }
+
     return result
   }
 }
