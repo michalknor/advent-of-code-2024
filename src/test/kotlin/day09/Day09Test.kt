@@ -12,6 +12,6 @@ class Day09Test {
 
   @Test
   fun part2() {
-    assertEquals(34, Day09(ParseFile.parseFileToListOfInt("day09/test.txt")).solvePart2())
+    assertEquals(2858, Day09(ParseFile.parseFileToListOfInt("day09/test.txt")).solvePart2())
   }
 }
