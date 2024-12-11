@@ -37,6 +37,6 @@ class Day02(private val input: List<List<Int>>) {
 }
 
 fun main() {
-  println(Day02(ParseFile.parseFileToListOfListOfInt("day02/input.txt")).solvePart1())
-  println(Day02(ParseFile.parseFileToListOfListOfInt("day02/input.txt")).solvePart2())
+  println(Day02(ParseFile.parseFileToListOfListOfInt("day02/input.txt", " ")).solvePart1())
+  println(Day02(ParseFile.parseFileToListOfListOfInt("day02/input.txt", " ")).solvePart2())
 }

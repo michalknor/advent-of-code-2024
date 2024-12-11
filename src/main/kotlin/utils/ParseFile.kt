@@ -12,9 +12,9 @@ internal object ParseFile {
       getResource(filePath)?.readText()?.lines()?.first()?.map { char -> char.digitToInt() }
           ?: emptyList()
 
-  fun parseFileToListOfListOfInt(filePath: String): List<List<Int>> =
+  fun parseFileToListOfListOfInt(filePath: String, delimiter: String): List<List<Int>> =
       getResource(filePath)?.readText()?.lines()?.map { line ->
-        line.split(" ").mapNotNull { it.toIntOrNull() }
+        line.split(delimiter).mapNotNull { it.toIntOrNull() }
       } ?: emptyList()
 
   fun parseFileToListOfListOfChars(filePath: String): List<List<Char>> =
