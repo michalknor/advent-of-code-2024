@@ -8,11 +8,16 @@ internal object ParseFile {
   fun parseFileToList(filePath: String): List<String> =
       getResource(filePath)?.readText()?.lines() ?: emptyList()
 
-  fun parseFileToListOfInt(filePath: String): List<Int> =
-      getResource(filePath)?.readText()?.lines()?.first()?.map { char -> char.digitToInt() }
-          ?: emptyList()
+  fun parseFileToListOfInt(filePath: String, delimiter: String = ""): List<Int> =
+      getResource(filePath)
+          ?.readText()
+          ?.lines()
+          ?.first()
+          ?.split(delimiter)
+          ?.filter { it.isNotEmpty() }
+          ?.map { it.toInt() } ?: emptyList()
 
-  fun parseFileToListOfListOfInt(filePath: String, delimiter: String): List<List<Int>> =
+  fun parseFileToListOfListOfInt(filePath: String, delimiter: String = ""): List<List<Int>> =
       getResource(filePath)?.readText()?.lines()?.map { line ->
         line.split(delimiter).mapNotNull { it.toIntOrNull() }
       } ?: emptyList()
