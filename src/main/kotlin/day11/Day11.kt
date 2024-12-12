@@ -1,7 +1,7 @@
 package day11
 
-import utils.ParseFile
 import kotlin.math.pow
+import utils.ParseFile
 
 // If the stone is engraved with the number 0, it is replaced by a stone engraved with the number 1.
 
@@ -13,35 +13,34 @@ import kotlin.math.pow
 // If none of the other rules apply, the stone is replaced by a new stone; the old stone's number
 // multiplied by 2024 is engraved on the new stone.
 
-class Day11(private val input: List<Int>) {
+class Day11(private val input: List<Long>) {
 
-  fun solvePart1(blinks: Int): Int {
+  fun solve(blinks: Int): Int {
     var stones = input
 
-    for (i in 1 until blinks) {
-      val newStones = emptyList<Int>().toMutableList()
+    for (i in 0 until blinks) {
+      val newStones = emptyList<Long>().toMutableList()
       for (stone in stones) {
-        if (stone == 0) {
+        if (stone == 0L) {
           newStones.add(1)
           continue
         }
         val stoneSize = stone.toString().length
         if (stoneSize % 2 == 0) {
-          newStones.add((stone / 10.0.pow(stoneSize / 2)).toInt())
-          newStones.add((stone % 10.0.pow(stoneSize / 2)).toInt())
+          newStones.add((stone / 10.0.pow(stoneSize / 2)).toLong())
+          newStones.add((stone % 10.0.pow(stoneSize / 2)).toLong())
           continue
         }
         newStones.add(stone * 2024)
       }
       stones = newStones
+      println(stones)
     }
     return stones.size
   }
-
-  fun solvePart2(): Int = 1
 }
 
 fun main() {
-  println(Day11(ParseFile.parseFileToListOfInt("day11/input.txt", " ")).solvePart1(25))
-  println(Day11(ParseFile.parseFileToListOfInt("day11/input.txt", " ")).solvePart2())
+  println(Day11(ParseFile.parseFileToListOfLong("day11/input.txt", " ")).solve(25))
+  //  println(Day11(ParseFile.parseFileToListOfLong("day11/input.txt", " ")).solve(75))
 }

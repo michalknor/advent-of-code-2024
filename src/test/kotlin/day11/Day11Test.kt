@@ -7,11 +7,12 @@ import utils.ParseFile
 class Day11Test {
   @Test
   fun part1() {
-    assertEquals(55312, Day11(ParseFile.parseFileToListOfInt("day11/test.txt", " ")).solvePart1(25))
+    assertEquals(
+        55312, Day11(ParseFile.parseFileToListOfLong("day11/test.txt", " ")).solvePart1(25))
   }
 
   @Test
   fun part2() {
-    assertEquals(81, Day11(ParseFile.parseFileToListOfInt("day11/test.txt", " ")).solvePart2())
+    assertEquals(81, Day11(ParseFile.parseFileToListOfLong("day11/test.txt", " ")).solvePart2())
   }
 }

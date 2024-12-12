@@ -17,6 +17,15 @@ internal object ParseFile {
           ?.filter { it.isNotEmpty() }
           ?.map { it.toInt() } ?: emptyList()
 
+  fun parseFileToListOfLong(filePath: String, delimiter: String = ""): List<Long> =
+      getResource(filePath)
+          ?.readText()
+          ?.lines()
+          ?.first()
+          ?.split(delimiter)
+          ?.filter { it.isNotEmpty() }
+          ?.map { it.toLong() } ?: emptyList()
+
   fun parseFileToListOfListOfInt(filePath: String, delimiter: String = ""): List<List<Int>> =
       getResource(filePath)?.readText()?.lines()?.map { line ->
         line.split(delimiter).mapNotNull { it.toIntOrNull() }
