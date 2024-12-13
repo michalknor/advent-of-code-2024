@@ -15,32 +15,72 @@ import utils.ParseFile
 
 class Day11(private val input: List<Long>) {
 
-  fun solve(blinks: Int): Int {
-    var stones = input
+  private var visited = HashMap<Pair<Long, Int>, Long>()
 
-    for (i in 0 until blinks) {
-      val newStones = emptyList<Long>().toMutableList()
-      for (stone in stones) {
-        if (stone == 0L) {
-          newStones.add(1)
-          continue
-        }
-        val stoneSize = stone.toString().length
-        if (stoneSize % 2 == 0) {
-          newStones.add((stone / 10.0.pow(stoneSize / 2)).toLong())
-          newStones.add((stone % 10.0.pow(stoneSize / 2)).toLong())
-          continue
-        }
-        newStones.add(stone * 2024)
-      }
-      stones = newStones
-      println(stones)
+  fun solve(blinks: Int): Long {
+    var result = 0L
+
+    for (stone in input) {
+      result += solve(stone, blinks)
     }
-    return stones.size
+
+    return result
   }
+
+  private fun solve(stone: Long, remainingBlinks: Int): Long {
+    val knownOutcome = visited[Pair(stone, remainingBlinks)]
+    if (knownOutcome != null) {
+      return knownOutcome
+    }
+
+    if (remainingBlinks == 0) {
+      return 1
+    }
+
+    if (stone == 0L) {
+      val result = solve(1L, remainingBlinks - 1)
+      visited[Pair(stone, remainingBlinks)] = result
+      return result
+    }
+
+    val stoneSize = stone.toString().length
+    if (stoneSize % 2 == 0) {
+      val result = solve((stone / 10.0.pow(stoneSize / 2)).toLong(), remainingBlinks - 1) +
+          solve((stone % 10.0.pow(stoneSize / 2)).toLong(), remainingBlinks - 1)
+      visited[Pair(stone, remainingBlinks)] = result
+      return result
+    }
+
+    val result = solve(stone * 2024, remainingBlinks - 1)
+    visited[Pair(stone, remainingBlinks)] = result
+    return result
+  }
+
+  //
+  //    var stones = input
+  //
+  //    for (i in 0 until blinks) {
+  //      val newStones = emptyList<Long>().toMutableList()
+  //      for (stone in stones) {
+  //        if (stone == 0L) {
+  //          newStones.add(1)
+  //          continue
+  //        }
+  //        val stoneSize = stone.toString().length
+  //        if (stoneSize % 2 == 0) {
+  //          newStones.add((stone / 10.0.pow(stoneSize / 2)).toLong())
+  //          newStones.add((stone % 10.0.pow(stoneSize / 2)).toLong())
+  //          continue
+  //        }
+  //        newStones.add(stone * 2024)
+  //      }
+  //      stones = newStones
+  //      println(stones)
+  //    }
+  //    return stones.size
 }
 
 fun main() {
   println(Day11(ParseFile.parseFileToListOfLong("day11/input.txt", " ")).solve(25))
-  //  println(Day11(ParseFile.parseFileToListOfLong("day11/input.txt", " ")).solve(75))
+    println(Day11(ParseFile.parseFileToListOfLong("day11/input.txt", " ")).solve(75))
 }
