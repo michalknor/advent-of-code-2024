@@ -14,7 +14,7 @@ class Day12(private val input: List<List<Char>>) {
     var result = 0
 
     while (queue.isNotEmpty()) {
-      val plantLocation = queue.removeAt(queue.size - 1)
+      val plantLocation = queue[queue.size - 1]
       val plantQueue = mutableListOf(Pair(plantLocation.first, plantLocation.second))
       val plantSymbol = input[plantLocation.second][plantLocation.first]
       var perimeter = 0
@@ -22,11 +22,9 @@ class Day12(private val input: List<List<Char>>) {
 
       while (plantQueue.isNotEmpty()) {
         val newPlantLocation = plantQueue.removeAt(plantQueue.size - 1)
-        println(newPlantLocation)
-        if (newPlantLocation.first !in input[0].indices || newPlantLocation.second !in input.indices) {
-          continue
-        }
-        if (input[newPlantLocation.second][newPlantLocation.first] != plantSymbol) {
+        if (newPlantLocation.first !in input[0].indices ||
+            newPlantLocation.second !in input.indices ||
+            input[newPlantLocation.second][newPlantLocation.first] != plantSymbol) {
           perimeter += 1
           continue
         }
@@ -37,7 +35,7 @@ class Day12(private val input: List<List<Char>>) {
         area += 1
         for (direction in Direction.getAllCardinalDirections()) {
           plantQueue.add(
-              Pair(plantLocation.first + direction.dx, plantLocation.second + direction.dy))
+              Pair(newPlantLocation.first + direction.dx, newPlantLocation.second + direction.dy))
         }
       }
       result += area * perimeter
@@ -47,7 +45,77 @@ class Day12(private val input: List<List<Char>>) {
   }
 
   fun solvePart2(): Int {
-    return 1
+    val queue =
+        input
+            .flatMapIndexed { row, list -> List(list.size) { col -> Pair(row, col) } }
+            .toMutableList()
+
+    var result = 0
+
+    while (queue.isNotEmpty()) {
+      val plantLocation = queue[queue.size - 1]
+      val plantQueue =
+          mutableListOf(
+              Triple(
+                  Pair(plantLocation.first, plantLocation.second),
+                  Pair(plantLocation.first, plantLocation.second),
+                  Direction.DirectionType.N))
+      val plantSymbol = input[plantLocation.second][plantLocation.first]
+      var area = 0
+      val sides = HashMap<Direction.DirectionType, MutableSet<Pair<Int, Int>>>()
+
+      while (plantQueue.isNotEmpty()) {
+        val (oldPlantLocation, newPlantLocation, oldDirection) =
+            plantQueue.removeAt(plantQueue.size - 1)
+        if (newPlantLocation.first !in input[0].indices ||
+            newPlantLocation.second !in input.indices ||
+            input[newPlantLocation.second][newPlantLocation.first] != plantSymbol) {
+          sides.getOrPut(oldDirection) { mutableSetOf() }.add(oldPlantLocation)
+          continue
+        }
+        if (queue.indexOf(newPlantLocation) == -1) {
+          continue
+        }
+        queue.remove(newPlantLocation)
+        area += 1
+        for (direction in Direction.getAllCardinalDirections()) {
+          plantQueue.add(
+              Triple(
+                  newPlantLocation,
+                  Pair(
+                      newPlantLocation.first + direction.dx,
+                      newPlantLocation.second + direction.dy),
+                  direction))
+        }
+      }
+
+      var numberOfSides = 0
+      for (sideType in sides) {
+        val directionType = sideType.key
+        val sideParts = sideType.value
+        while (sideParts.isNotEmpty()) {
+          val pivotSide = sideParts.first().also { sideParts.remove(it) }
+          var sideToFind =
+              Pair(pivotSide.first + directionType.dy, pivotSide.second + directionType.dx)
+          numberOfSides++
+          while (sideParts.contains(sideToFind)) {
+            sideParts.remove(sideToFind)
+            sideToFind =
+                Pair(sideToFind.first + directionType.dy, sideToFind.second + directionType.dx)
+          }
+          sideToFind = Pair(pivotSide.first - directionType.dy, pivotSide.second - directionType.dx)
+          while (sideParts.contains(sideToFind)) {
+            sideParts.remove(sideToFind)
+            sideToFind =
+                Pair(sideToFind.first - directionType.dy, sideToFind.second - directionType.dx)
+          }
+        }
+      }
+
+      result += area * numberOfSides
+    }
+
+    return result
   }
 }
 
