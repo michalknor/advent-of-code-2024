@@ -48,23 +48,23 @@ class Day08(private val input: List<List<Char>>) {
           antinodes.add(second)
           antinodes.add(first)
 
-          var i = 1
+          var k = 1
           while (true) {
-            val antinode1 = Pair(second.first + vector.first * i, second.second + vector.second * i)
+            val antinode1 = Pair(second.first + vector.first * k, second.second + vector.second * k)
             if (antinode1.first !in input[0].indices || antinode1.second !in input.indices) {
               break
             }
             antinodes.add(antinode1)
-            i++
+            k++
           }
-          i = 1
+          k = 1
           while (true) {
-            val antinode2 = Pair(first.first - vector.first * i, first.second - vector.second * i)
+            val antinode2 = Pair(first.first - vector.first * k, first.second - vector.second * k)
             if (antinode2.first !in input[0].indices || antinode2.second !in input.indices) {
               break
             }
             antinodes.add(antinode2)
-            i++
+            k++
           }
         }
       }
