@@ -18,10 +18,7 @@ class Day15(input: String) {
             }
             .first()
 
-    val newGrid =
-        grid
-            .map { it.toMutableList() } // Convert each row to MutableList
-            .toMutableList()
+    val newGrid = grid.map { it.toMutableList() }.toMutableList()
 
     newGrid[position.second][position.first] = '.'
 

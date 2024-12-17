@@ -9,10 +9,9 @@ class Day13(input: String) {
         val coords =
             group.lines().map { "\\d+".toRegex().findAll(it).map { it.value.toLong() }.toList() }
         Triple(
-            Pair(coords[0][0], coords[0][1]), // Button A: Pair(X, Y)
-            Pair(coords[1][0], coords[1][1]), // Button B: Pair(X, Y)
-            Pair(coords[2][0], coords[2][1]) // Prize: Pair(X, Y)
-            )
+            Pair(coords[0][0], coords[0][1]),
+            Pair(coords[1][0], coords[1][1]),
+            Pair(coords[2][0], coords[2][1]))
       }
 
   fun solvePart1(): Long {
